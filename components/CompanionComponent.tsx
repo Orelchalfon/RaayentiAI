@@ -25,23 +25,16 @@ const CompanionComponent = ({
   style,
   voice,
 }: CompanionComponentProps) => {
-<<<<<<< HEAD
   //#region Const
-=======
->>>>>>> cb68df0c9035d61004d6973fe07a504b581b49a6
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [messages, setMessages] = useState<SavedMessage[]>([]);
 
   const lottieRef = useRef<LottieRefCurrentProps>(null);
-<<<<<<< HEAD
   //#endregion
-  //#region Speaking Effect 
-  
-=======
+  //#region Speaking Effect
 
->>>>>>> cb68df0c9035d61004d6973fe07a504b581b49a6
   useEffect(() => {
     if (lottieRef) {
       if (isSpeaking) {
@@ -53,10 +46,6 @@ const CompanionComponent = ({
     console.log(messages);
   }, [isSpeaking, lottieRef]);
 
-<<<<<<< HEAD
-    
-=======
->>>>>>> cb68df0c9035d61004d6973fe07a504b581b49a6
   useEffect(() => {
     const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
 
@@ -204,15 +193,10 @@ const CompanionComponent = ({
       </section>
 
       <section className='transcript'>
-<<<<<<< HEAD
         <div className={`transcript-message no-scrollbar `}>
           {messages.map((message, index) => {
             console.log(message);
 
-=======
-        <div className='transcript-message no-scrollbar'>
-          {messages.map((message, index) => {
->>>>>>> cb68df0c9035d61004d6973fe07a504b581b49a6
             if (message.role === "assistant") {
               return (
                 <p key={index} className='max-sm:text-sm'>
@@ -230,15 +214,11 @@ const CompanionComponent = ({
           })}
         </div>
 
-<<<<<<< HEAD
         <div
           className={`transcript-fade ${
             !(callStatus === CallStatus.ACTIVE) && "hidden"
           }`}
         />
-=======
-        <div className='transcript-fade' />
->>>>>>> cb68df0c9035d61004d6973fe07a504b581b49a6
       </section>
     </section>
   );
