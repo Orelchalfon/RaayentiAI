@@ -7,6 +7,7 @@ import { vapi } from "@/lib/vapi.sdk";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations, useLocale } from 'next-intl';
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -32,6 +33,8 @@ const CompanionComponent = ({
   const [messages, setMessages] = useState<SavedMessage[]>([]);
 
   const lottieRef = useRef<LottieRefCurrentProps>(null);
+  const t = useTranslations();
+  const locale = useLocale();
   //#endregion
   //#region Speaking Effect
 
@@ -98,8 +101,11 @@ const CompanionComponent = ({
       serverMessages: [],
     };
 
-    // @ts-expect-error
-    vapi.start(configureAssistant(voice, style), assistantOverrides);
+    const firstMessage = t('ai.firstMessage');
+    const systemPrompt = t('ai.systemPrompt');
+
+    // @ts-expect-error -- Vapi types don't match exactly but this works
+    vapi.start(configureAssistant(voice, style, locale, firstMessage, systemPrompt), assistantOverrides);
   };
 
   const handleDisconnect = () => {
@@ -171,7 +177,7 @@ const CompanionComponent = ({
               height={36}
             />
             <p className='max-sm:hidden'>
-              {isMuted ? "Turn on microphone" : "Turn off microphone"}
+              {isMuted ? t('common.turnOnMicrophone') : t('common.turnOffMicrophone')}
             </p>
           </button>
           <button
@@ -184,10 +190,10 @@ const CompanionComponent = ({
               callStatus === CallStatus.ACTIVE ? handleDisconnect : handleCall
             }>
             {callStatus === CallStatus.ACTIVE
-              ? "End Session"
+              ? t('common.endSession')
               : callStatus === CallStatus.CONNECTING
-              ? "Connecting"
-              : "Start Session"}
+              ? t('common.connecting')
+              : t('common.startSession')}
           </button>
         </div>
       </section>

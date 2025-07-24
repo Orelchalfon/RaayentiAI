@@ -2,19 +2,21 @@
 import { cn } from "@/lib/utils";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-type LinkType = { label: string; href: string };
+import { Link, usePathname } from "@/i18n/routing";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslations } from 'next-intl';
+type LinkType = { labelKey: string; href: string };
 const links: LinkType[] = [
   {
-    label: "Home",
+    labelKey: "navigation.home",
     href: "/",
   },
-  { label: "Learning Companions", href: "/companions" },
-  { label: "My Journy", href: "/my-journey" },
+  { labelKey: "navigation.companions", href: "/companions" },
+  { labelKey: "navigation.myJourney", href: "/my-journey" },
 ];
 const Navbar = () => {
   const path = usePathname();
+  const t = useTranslations();
 
   return (
     <nav className='navbar'>
@@ -26,14 +28,17 @@ const Navbar = () => {
       <ul className='flex items-center gap-8'>
         {links.map((link) => (
           <li
-            key={link.label}
+            key={link.labelKey}
             className={cn(
               "hover:text-primary",
               path === link.href && "text-primary"
             )}>
-            <Link href={link.href}>{link.label}</Link>
+            <Link href={link.href}>{t(link.labelKey)}</Link>
           </li>
         ))}
+        <li>
+          <LanguageSwitcher />
+        </li>
         <li>
           <SignedOut>
             <SignInButton>

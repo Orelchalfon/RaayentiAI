@@ -2,6 +2,36 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* RTL Support for Hebrew */
+[dir="rtl"] {
+  direction: rtl;
+}
+
+[dir="rtl"] .navbar {
+  direction: rtl;
+}
+
+[dir="rtl"] .navbar ul {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .home-section {
+  direction: rtl;
+}
+
+[dir="rtl"] .companion-section {
+  direction: rtl;
+}
+
+[dir="rtl"] .user-section {
+  direction: rtl;
+}
+
+[dir="rtl"] .transcript {
+  direction: rtl;
+  text-align: right;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {

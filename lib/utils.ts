@@ -11,17 +11,24 @@ export const getSubjectColor = (subject: string) => {
   return subjectsColors[subject as keyof typeof subjectsColors];
 };
 
-export const configureAssistant = (voice: string, style: string) => {
+export const configureAssistant = (voice: string, style: string, locale: string = 'en', firstMessage?: string, systemPrompt?: string) => {
   const voiceId = voices[voice as keyof typeof voices][
     style as keyof (typeof voices)[keyof typeof voices]
   ] || "sarah";
+  
+  // Language mapping for Deepgram transcriber
+  const languageMap: { [key: string]: string } = {
+    'en': 'en',
+    'he': 'he'  // Hebrew is supported by Deepgram
+  };
+
   const vapiAssistant: CreateAssistantDTO = {
     name: "Companion",
-    firstMessage: "Hello, let's start the session. Today we'll be talking about {{topic}}.",
+    firstMessage: firstMessage || "Hello, let's start the session. Today we'll be talking about {{topic}}.",
     transcriber: {
       provider: "deepgram",
       model: "nova-3",
-      language: "en",
+      language: (languageMap[locale] || "en") as any,
     },
     voice: {
       provider: "11labs",
@@ -38,7 +45,7 @@ export const configureAssistant = (voice: string, style: string) => {
       messages: [
         {
           role: "system",
-          content: `You are a highly knowledgeable tutor teaching a real-time voice session with a student. Your goal is to teach the student about the topic and subject.
+          content: systemPrompt || `You are a highly knowledgeable tutor teaching a real-time voice session with a student. Your goal is to teach the student about the topic and subject.
 
                     Tutor Guidelines:
                     Stick to the given topic - {{ topic }} and subject - {{ subject }} and teach the student about it.
@@ -48,6 +55,7 @@ export const configureAssistant = (voice: string, style: string) => {
                     Keep your style of conversation {{ style }}.
                     Keep your responses short, like in a real voice conversation.
                     Do not include any special characters in your responses - this is a voice conversation.
+                    ${locale === 'he' ? 'Respond in Hebrew.' : ''}
               `,
         },
       ],

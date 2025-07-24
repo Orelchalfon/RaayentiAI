@@ -17,8 +17,20 @@ export const subjectsColors = {
 };
 
 export const voices = {
-  male: { casual: "2BJW5coyhAzSr8STdHbE", formal: "c6SfcYrb2t09NHXiT80T" },
-  female: { casual: "ZIlrSGI4jZqobxRKprJz", formal: "sarah" },
+  male: { 
+    casual: "2BJW5coyhAzSr8STdHbE", 
+    formal: "c6SfcYrb2t09NHXiT80T",
+    // Hebrew male voices (using multilingual voices that support Hebrew)
+    hebrew_casual: "2BJW5coyhAzSr8STdHbE", // English voice that works with Hebrew in multilingual model
+    hebrew_formal: "c6SfcYrb2t09NHXiT80T"
+  },
+  female: { 
+    casual: "ZIlrSGI4jZqobxRKprJz", 
+    formal: "sarah",
+    // Hebrew female voices (using multilingual voices that support Hebrew)
+    hebrew_casual: "ZIlrSGI4jZqobxRKprJz", // English voice that works with Hebrew in multilingual model
+    hebrew_formal: "sarah"
+  },
 };
 
 export const recentSessions = [

@@ -1,0 +1,59 @@
+{
+  "navigation": {
+    "home": "Home",
+    "companions": "Learning Companions",
+    "myJourney": "My Journey",
+    "subscription": "Subscription"
+  },
+  "common": {
+    "startSession": "Start Session",
+    "endSession": "End Session",
+    "connecting": "Connecting",
+    "minutes": "minutes",
+    "bookmarked": "Bookmarked",
+    "turnOnMicrophone": "Turn on microphone",
+    "turnOffMicrophone": "Turn off microphone"
+  },
+  "home": {
+    "title": "Popular Companions",
+    "recentSessions": "Recently completed lessons"
+  },
+  "subjects": {
+    "maths": "Maths",
+    "language": "Language", 
+    "science": "Science",
+    "history": "History",
+    "coding": "Coding",
+    "economics": "Economics"
+  },
+  "companions": {
+    "neura": {
+      "name": "Neura the Brainy Explorer",
+      "topic": "Topic: Neural Network of the Brain"
+    },
+    "countsy": {
+      "name": "Countsy the Number Wizard", 
+      "topic": "Topic: Derivatives & Integrals"
+    },
+    "verba": {
+      "name": "Verba the Vocabulary Builder",
+      "topic": "Topic: English Literature"
+    },
+    "codey": {
+      "name": "Codey the Logic Hacker",
+      "topic": "Topic: Intro to If-Else Statements"
+    },
+    "memo": {
+      "name": "Memo, the Memory Keeper",
+      "topic": "Topic: World Wars: Causes & Consequences"
+    },
+    "market": {
+      "name": "The Market Maestro",
+      "topic": "Topic: The Basics of Supply & Demand"
+    }
+  },
+  "ai": {
+    "firstMessage": "Hello, let's start the session. Today we'll be talking about {{topic}}.",
+    "systemPrompt": "You are a highly knowledgeable tutor teaching a real-time voice session with a student. Your goal is to teach the student about the topic and subject.\n\nTutor Guidelines:\nStick to the given topic - {{ topic }} and subject - {{ subject }} and teach the student about it.\nKeep the conversation flowing smoothly while maintaining control.\nFrom time to time make sure that the student is following you and understands you.\nBreak down the topic into smaller parts and teach the student one part at a time.\nKeep your style of conversation {{ style }}.\nKeep your responses short, like in a real voice conversation.\nDo not include any special characters in your responses - this is a voice conversation."
+  }
+}
