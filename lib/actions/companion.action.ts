@@ -45,107 +45,96 @@ export const GetCompanion = async (id: string) => {
     const { data, error } = await supabase.from("companions").select().eq('id', id)
 
     if (error || !data) throw Error(error?.message || "Failed to fetch companion !")
-    console.log(data,"actions")
+    console.log(data, "actions")
     return data[0];
 }
 
-// export const getCompanion = async (id: string) => {
-//     const supabase = createSupabaseClient();
 
-//     const { data, error } = await supabase
-//         .from('companions')
-//         .select()
-//         .eq('id', id);
 
-//     if (error) return console.log(error);
+export const AddToSessionHistory = async (companionId: string) => {
+    const { userId } = await auth();
+    const supabase = createSupabaseClient();
+    const { data, error } = await supabase.from('session_history')
+        .insert({
+            companion_id: companionId,
+            user_id: userId,
+        })
 
-//     return data[0];
-// }
+    if (error) throw new Error(error.message);
 
-// export const addToSessionHistory = async (companionId: string) => {
-//     const { userId } = await auth();
-//     const supabase = createSupabaseClient();
-//     const { data, error } = await supabase.from('session_history')
-//         .insert({
-//             companion_id: companionId,
-//             user_id: userId,
-//         })
+    return data;
+}
 
-//     if (error) throw new Error(error.message);
+export const getRecentSessions = async (limit = 10) => {
+    const supabase = createSupabaseClient();
+    const { data, error } = await supabase
+        .from('session_history')
+        .select(`companions:companion_id (*)`)
+        .order('created_at', { ascending: false })
+        .limit(limit)
 
-//     return data;
-// }
+    if (error) throw new Error(error.message);
 
-// export const getRecentSessions = async (limit = 10) => {
-//     const supabase = createSupabaseClient();
-//     const { data, error } = await supabase
-//         .from('session_history')
-//         .select(`companions:companion_id (*)`)
-//         .order('created_at', { ascending: false })
-//         .limit(limit)
+    return data.map(({ companions }) => companions);
+}
 
-//     if (error) throw new Error(error.message);
+export const getUserSessions = async (userId: string, limit = 10) => {
+    const supabase = createSupabaseClient();
+    const { data, error } = await supabase
+        .from('session_history')
+        .select(`companions:companion_id (*)`)
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(limit)
 
-//     return data.map(({ companions }) => companions);
-// }
+    if (error) throw new Error(error.message);
 
-// export const getUserSessions = async (userId: string, limit = 10) => {
-//     const supabase = createSupabaseClient();
-//     const { data, error } = await supabase
-//         .from('session_history')
-//         .select(`companions:companion_id (*)`)
-//         .eq('user_id', userId)
-//         .order('created_at', { ascending: false })
-//         .limit(limit)
+    return data.map(({ companions }) => companions);
+}
 
-//     if (error) throw new Error(error.message);
+export const getUserCompanions = async (userId: string) => {
+    const supabase = createSupabaseClient();
+    const { data, error } = await supabase
+        .from('companions')
+        .select()
+        .eq('author', userId)
 
-//     return data.map(({ companions }) => companions);
-// }
+    if (error) throw new Error(error.message);
 
-// export const getUserCompanions = async (userId: string) => {
-//     const supabase = createSupabaseClient();
-//     const { data, error } = await supabase
-//         .from('companions')
-//         .select()
-//         .eq('author', userId)
+    return data;
+}
 
-//     if (error) throw new Error(error.message);
+export const newCompanionPermissions = async () => {
+    const { userId, has } = await auth();
+    const supabase = createSupabaseClient();
 
-//     return data;
-// }
+    let limit = 0;
 
-// export const newCompanionPermissions = async () => {
-//     const { userId, has } = await auth();
-//     const supabase = createSupabaseClient();
+    if (has({ plan: 'pro' })) {
+        return true;
+    } else if (has({ feature: "3_companion_limit" })) {
+        limit = 3;
+    } else if (has({ feature: "10_companion_limit" })) {
+        limit = 10;
+    }
 
-//     let limit = 0;
+    const { data, error } = await supabase
+        .from('companions')
+        .select('id', { count: 'exact' })
+        .eq('author', userId)
 
-//     if (has({ plan: 'pro' })) {
-//         return true;
-//     } else if (has({ feature: "3_companion_limit" })) {
-//         limit = 3;
-//     } else if (has({ feature: "10_companion_limit" })) {
-//         limit = 10;
-//     }
+    if (error) throw new Error(error.message);
 
-//     const { data, error } = await supabase
-//         .from('companions')
-//         .select('id', { count: 'exact' })
-//         .eq('author', userId)
+    const companionCount = data?.length;
 
-//     if (error) throw new Error(error.message);
+    if (companionCount >= limit) {
+        return false
+    } else {
+        return true;
+    }
+}
 
-//     const companionCount = data?.length;
-
-//     if (companionCount >= limit) {
-//         return false
-//     } else {
-//         return true;
-//     }
-// }
-
-// // Bookmarks
+// Bookmarks
 // export const addBookmark = async (companionId: string, path: string) => {
 //     const { userId } = await auth();
 //     if (!userId) return;
