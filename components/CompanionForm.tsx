@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { subjects } from "@/constants";
 import { CreateCompanion } from "@/lib/actions/companion.action";
 import { redirect } from "next/navigation";
 import {
@@ -23,7 +24,6 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Textarea } from "./ui/textarea";
-import { subjects } from "@/constants";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Companion is required" }),
@@ -31,6 +31,7 @@ const formSchema = z.object({
   topic: z.string().min(2, { message: "Topic is required" }),
   voice: z.string().min(2, { message: "Voice is required" }),
   style: z.string().min(2, { message: "Voice is required" }),
+  student: z.string().min(2, { message: "Student is required" }),
   duration: z.coerce.number().min(2, { message: "Duration is required" }),
 });
 
@@ -43,6 +44,7 @@ const CompanionForm = () => {
       topic: "",
       voice: "",
       style: "",
+      student: "",
       duration: 15,
     },
   });
@@ -60,7 +62,7 @@ const CompanionForm = () => {
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6 pb-6 '>
         <FormField
           control={form.control}
           name='name'
@@ -167,6 +169,30 @@ const CompanionForm = () => {
                   <SelectContent>
                     <SelectItem value='formal'>Formal</SelectItem>
                     <SelectItem value='casual'>Casual</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='student'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Student</FormLabel>
+              <FormControl>
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  defaultValue={field.value}>
+                  <SelectTrigger className='input'>
+                    <SelectValue placeholder='Select student (speed level)' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value='children'>Children</SelectItem>
+                    <SelectItem value='adult'>Adult</SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>

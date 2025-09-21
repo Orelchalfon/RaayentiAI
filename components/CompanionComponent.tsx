@@ -24,6 +24,7 @@ const CompanionComponent = ({
   userImage,
   style,
   voice,
+  student,
 }: CompanionComponentProps) => {
   //#region Const
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
@@ -99,7 +100,7 @@ const CompanionComponent = ({
     };
 
     // @ts-expect-error
-    vapi.start(configureAssistant(voice, style), assistantOverrides);
+    vapi.start(configureAssistant(voice, style, student), assistantOverrides);
   };
 
   const handleDisconnect = () => {

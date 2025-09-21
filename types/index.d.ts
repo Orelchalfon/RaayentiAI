@@ -32,6 +32,7 @@ interface CreateCompanion {
   topic: string;
   voice: string;
   style: string;
+  student: string;
   duration: number;
 }
 
@@ -80,4 +81,5 @@ interface CompanionComponentProps {
   userImage: string;
   voice: string;
   style: string;
+  student: string;
 }
