@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  
 };
 
 export default withSentryConfig(withSentryConfig(nextConfig, {
@@ -72,6 +73,6 @@ disableLogger: true,
 // See the following for more information:
 // https://docs.sentry.io/product/crons/
 // https://vercel.com/docs/cron-jobs
-  automaticVercelMonitors: true,
-telemetry: false,
+automaticVercelMonitors: true,
+
 });

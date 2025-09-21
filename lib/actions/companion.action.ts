@@ -1,12 +1,12 @@
 'use server';
 
-import { createSupabaseClient } from "@/lib/supabase";
+import { createSupabaseClientAuth, createSupabaseClientPublic } from "@/lib/supabase";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
 export const CreateCompanion = async (formData: CreateCompanion) => {
     const { userId: author } = await auth();
-    const supabase = createSupabaseClient();
+    const supabase = createSupabaseClientAuth();
 
     const { data, error } = await supabase
         .from('companions')
@@ -19,7 +19,7 @@ export const CreateCompanion = async (formData: CreateCompanion) => {
 }
 
 export const GetAllCompanions = async ({ limit = 10, page = 1, subject, topic }: GetAllCompanions) => {
-    const supabase = createSupabaseClient();
+    const supabase = createSupabaseClientPublic();
 
     let query = supabase.from('companions').select();
 
@@ -42,7 +42,7 @@ export const GetAllCompanions = async ({ limit = 10, page = 1, subject, topic }:
 }
 
 export const GetCompanion = async (id: string) => {
-    const supabase = createSupabaseClient();
+    const supabase = createSupabaseClientPublic();
     const { data, error } = await supabase.from("companions").select().eq('id', id)
 
     if (error || !data) throw Error(error?.message || "Failed to fetch companion !")
@@ -54,7 +54,7 @@ export const GetCompanion = async (id: string) => {
 
 export const AddToSessionHistory = async (companionId: string) => {
     const { userId } = await auth();
-    const supabase = createSupabaseClient();
+    const supabase = createSupabaseClientAuth();
     const { data, error } = await supabase.from('session_history')
         .insert({
             companion_id: companionId,
@@ -67,7 +67,7 @@ export const AddToSessionHistory = async (companionId: string) => {
 }
 
 export const GetRecentSessions = async (limit = 10) => {
-    const supabase = createSupabaseClient();
+    const supabase = createSupabaseClientPublic();
     const { data, error } = await supabase
         .from('session_history')
         .select(`companions:companion_id (*)`)
@@ -80,7 +80,7 @@ export const GetRecentSessions = async (limit = 10) => {
 }
 
 export const getUserSessions = async (userId: string, limit = 10) => {
-    const supabase = createSupabaseClient();
+    const supabase = createSupabaseClientPublic();
     const { data, error } = await supabase
         .from('session_history')
         .select(`companions:companion_id (*)`)
@@ -94,7 +94,7 @@ export const getUserSessions = async (userId: string, limit = 10) => {
 }
 
 export const getUserCompanions = async (userId: string) => {
-    const supabase = createSupabaseClient();
+    const supabase = createSupabaseClientAuth();
     const { data, error } = await supabase
         .from('companions')
         .select()
@@ -107,7 +107,7 @@ export const getUserCompanions = async (userId: string) => {
 
 export const newCompanionPermissions = async () => {
     const { userId, has } = await auth();
-    const supabase = createSupabaseClient();
+    const supabase = createSupabaseClientAuth();
 
     let limit = 0;
 
@@ -137,7 +137,7 @@ export const newCompanionPermissions = async () => {
 export const addBookmark = async (companionId: string, path: string) => {
     const { userId } = await auth();
     if (!userId) return;
-    const supabase = createSupabaseClient();
+    const supabase = createSupabaseClientAuth();
     const { data, error } = await supabase.from("bookmarks").insert({
         companion_id: companionId,
         user_id: userId,
@@ -154,7 +154,7 @@ export const addBookmark = async (companionId: string, path: string) => {
 export const removeBookmark = async (companionId: string, path: string) => {
     const { userId } = await auth();
     if (!userId) return;
-    const supabase = createSupabaseClient();
+    const supabase = createSupabaseClientAuth();
     const { data, error } = await supabase
         .from("bookmarks")
         .delete()
@@ -169,7 +169,7 @@ export const removeBookmark = async (companionId: string, path: string) => {
 
 // It's almost the same as getUserCompanions, but it's for the bookmarked companions
 export const getBookmarkedCompanions = async (userId: string) => {
-    const supabase = createSupabaseClient();
+    const supabase = createSupabaseClientAuth();
     const { data, error } = await supabase
         .from("bookmarks")
         .select(`companions:companion_id (*)`) // Notice the (*) to get all the companion data
