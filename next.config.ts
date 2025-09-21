@@ -72,5 +72,6 @@ disableLogger: true,
 // See the following for more information:
 // https://docs.sentry.io/product/crons/
 // https://vercel.com/docs/cron-jobs
-automaticVercelMonitors: true,
+  automaticVercelMonitors: true,
+telemetry: false,
 });
