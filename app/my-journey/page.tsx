@@ -12,14 +12,18 @@ import {
 } from "@/lib/actions/companion.action";
 import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
+export const revalidate = 0;
 import { redirect } from "next/navigation";
 const Profile = async () => {
   const user = await currentUser();
 
   if (!user) return redirect("/sign-in");
-  const companions = await getUserCompanions(user.id);
-  const sessionHistory = await getUserSessions(user.id);
-  const bookmarkedCompanions = await getBookmarkedCompanions(user.id);
+
+  const [companions, sessionHistory, bookmarkedCompanions] = await Promise.all([
+    getUserCompanions(user.id),
+    getUserSessions(user.id),
+    getBookmarkedCompanions(user.id),
+  ]);
 
   return (
     <main className='min-lg:w-3/4 '>
