@@ -31,7 +31,6 @@ const formSchema = z.object({
   topic: z.string().min(2, { message: "Topic is required" }),
   voice: z.string().min(2, { message: "Voice is required" }),
   style: z.string().min(2, { message: "Voice is required" }),
-  student: z.string().min(2, { message: "Student is required" }),
   duration: z.coerce.number().min(2, { message: "Duration is required" }),
 });
 
@@ -44,7 +43,6 @@ const CompanionForm = () => {
       topic: "",
       voice: "",
       style: "",
-      student: "",
       duration: 15,
     },
   });
@@ -176,30 +174,7 @@ const CompanionForm = () => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name='student'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Student</FormLabel>
-              <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  value={field.value}
-                  defaultValue={field.value}>
-                  <SelectTrigger className='input'>
-                    <SelectValue placeholder='Select student (speed level)' />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value='children'>Children</SelectItem>
-                    <SelectItem value='adult'>Adult</SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
 
         <FormField
           control={form.control}
