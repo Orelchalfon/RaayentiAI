@@ -99,7 +99,7 @@ const CompanionComponent = ({
     };
 
     // @ts-expect-error
-    vapi.start(configureAssistant(voice, style, student), assistantOverrides);
+    vapi.start(configureAssistant(voice, style), assistantOverrides);
   };
 
   const handleDisconnect = () => {

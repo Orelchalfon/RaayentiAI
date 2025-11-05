@@ -15,10 +15,7 @@ export const subjectsColors = {
   history: "#FFECC8",
   economics: "#C8FFDF",
 };
-export const students = {
-  children: { speed: 0.9 },
-  adult: { speed: 1.0 },
-}
+
 export const voices = {
   male: { casual: "2BJW5coyhAzSr8STdHbE", formal: "c6SfcYrb2t09NHXiT80T" },
   female: { casual: "ZIlrSGI4jZqobxRKprJz", formal: "sarah" },
