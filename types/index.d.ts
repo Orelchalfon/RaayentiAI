@@ -81,5 +81,4 @@ interface CompanionComponentProps {
   userImage: string;
   voice: string;
   style: string;
-  student: string;
 }

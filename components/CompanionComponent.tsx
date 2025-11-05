@@ -24,7 +24,6 @@ const CompanionComponent = ({
   userImage,
   style,
   voice,
-  student,
 }: CompanionComponentProps) => {
   //#region Const
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
@@ -123,7 +122,7 @@ const CompanionComponent = ({
                   ? "opacity-1001"
                   : "opacity-0",
                 callStatus === CallStatus.CONNECTING &&
-                  "opacity-100 animate-pulse"
+                "opacity-100 animate-pulse"
               )}>
               <Image
                 src={`/icons/${subject}.svg`}
@@ -187,8 +186,8 @@ const CompanionComponent = ({
             {callStatus === CallStatus.ACTIVE
               ? "End Session"
               : callStatus === CallStatus.CONNECTING
-              ? "Connecting"
-              : "Start Session"}
+                ? "Connecting"
+                : "Start Session"}
           </button>
         </div>
       </section>
@@ -216,9 +215,8 @@ const CompanionComponent = ({
         </div>
 
         <div
-          className={`transcript-fade ${
-            !(callStatus === CallStatus.ACTIVE) && "hidden"
-          }`}
+          className={`transcript-fade ${!(callStatus === CallStatus.ACTIVE) && "hidden"
+            }`}
         />
       </section>
     </section>
