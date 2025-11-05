@@ -3,6 +3,7 @@ import SearchInput from "@/components/SearchInput";
 import SubjectFilter from "@/components/SubjectFilter";
 import { GetAllCompanions } from "@/lib/actions/companion.action";
 import { getSubjectColor } from "@/lib/utils";
+import { t } from "@/locales/i18n";
 
 const CompanionsLibrary = async ({ searchParams }: SearchParams) => {
   const filters = await searchParams;
@@ -14,7 +15,7 @@ const CompanionsLibrary = async ({ searchParams }: SearchParams) => {
   return (
     <main>
       <section className='flex justify-between gap-4 max-sm:flex-col'>
-        <h1>Companion Library</h1>
+        <h1>{t("companions.libraryHeading")}</h1>
         <div className='flex gap-4'>
           <SearchInput />
           <SubjectFilter />

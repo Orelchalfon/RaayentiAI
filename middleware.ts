@@ -1,6 +1,8 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
 
-export default clerkMiddleware();
+export default clerkMiddleware({
+  publicRoutes: ["/", "/favicon.ico", "/_next/:path*", "/images/:path*", "/icons/:path*"],
+});
 
 export const config = {
   matcher: [

@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { t } from "@/locales/i18n";
 
 const SubjectFilter = () => {
   const router = useRouter();
@@ -38,10 +39,10 @@ const SubjectFilter = () => {
   return (
     <Select onValueChange={setSubject} value={subject}>
       <SelectTrigger className='input capitalize'>
-        <SelectValue placeholder='Subject' />
+        <SelectValue placeholder={t("subjectFilter.placeholder")} />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value='all'>All subjects</SelectItem>
+        <SelectItem value='all'>{t("subjectFilter.all")}</SelectItem>
         {subjects.map((subject) => (
           <SelectItem key={subject} value={subject} className='capitalize'>
             {subject}

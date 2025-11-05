@@ -7,6 +7,7 @@ import { vapi } from "@/lib/vapi.sdk";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { t } from "@/locales/i18n";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -172,7 +173,7 @@ const CompanionComponent = ({
               height={36}
             />
             <p className='max-sm:hidden'>
-              {isMuted ? "Turn on microphone" : "Turn off microphone"}
+              {isMuted ? t("session.turnOffMic").replace("off", "on") : t("session.turnOffMic")}
             </p>
           </button>
           <button
@@ -185,10 +186,10 @@ const CompanionComponent = ({
               callStatus === CallStatus.ACTIVE ? handleDisconnect : handleCall
             }>
             {callStatus === CallStatus.ACTIVE
-              ? "End Session"
+              ? t("session.endLesson")
               : callStatus === CallStatus.CONNECTING
               ? "Connecting"
-              : "Start Session"}
+              : t("dashboard.launchLesson")}
           </button>
         </div>
       </section>

@@ -14,6 +14,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 export const revalidate = 0;
 import { redirect } from "next/navigation";
+import { t } from "@/locales/i18n";
 const Profile = async () => {
   const user = await currentUser();
 
@@ -56,46 +57,46 @@ const Profile = async () => {
               />
               <p className='text-2xl font-bold'>{sessionHistory.length}</p>
             </div>
-            <div>Lessons completed</div>
+            <div>{t("profile.lessonsCompleted")}</div>
           </div>
           <div className='border border-black rouded-lg p-3 gap-2 flex flex-col h-fit'>
             <div className='flex gap-2 items-center'>
               <Image src='/icons/cap.svg' alt='cap' width={22} height={22} />
               <p className='text-2xl font-bold'>{companions.length}</p>
             </div>
-            <div>Companions created</div>
+            <div>{t("profile.companionsCreated")}</div>
           </div>
         </div>
       </section>
       <Accordion type='multiple'>
         <AccordionItem value='bookmarks'>
           <AccordionTrigger className='text-2xl font-bold'>
-            Bookmarked Companions {`(${bookmarkedCompanions.length})`}
+            {t("profile.bookmarked")} {`(${bookmarkedCompanions.length})`}
           </AccordionTrigger>
           <AccordionContent>
             <CompanionsList
               companions={bookmarkedCompanions}
-              title='Bookmarked Companions'
+              title={t("profile.bookmarked")}
             />
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value='recent'>
           <AccordionTrigger className='text-2xl font-bold'>
-            Recent Sessions
+            {t("profile.recentSessions")}
           </AccordionTrigger>
           <AccordionContent>
             <CompanionsList
-              title='Recent Sessions'
+              title={t("profile.recentSessions")}
               companions={sessionHistory}
             />
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value='companions'>
           <AccordionTrigger className='text-2xl font-bold'>
-            My Companions {`(${companions.length})`}
+            {t("profile.myCompanions")} {`(${companions.length})`}
           </AccordionTrigger>
           <AccordionContent>
-            <CompanionsList title='My Companions' companions={companions} />
+            <CompanionsList title={t("profile.myCompanions")} companions={companions} />
           </AccordionContent>
         </AccordionItem>
       </Accordion>

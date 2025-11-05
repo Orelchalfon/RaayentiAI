@@ -8,6 +8,17 @@ const nextConfig: NextConfig = {
       { hostname: 'img.clerk.com' }
     ]
   },
+  // Reduce client bundle by optimizing selected packages
+  experimental: {
+    optimizePackageImports: [
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-label",
+      "@radix-ui/react-select",
+      "framer-motion",
+      "lottie-react",
+      "lucide-react"
+    ],
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },

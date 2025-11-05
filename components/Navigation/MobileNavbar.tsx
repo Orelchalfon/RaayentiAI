@@ -6,17 +6,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { links } from "./links";
+import { useLanguage } from "@/locales/I18nProvider";
+import LanguageSwitcher from "../LanguageSwitcher";
 
 const MobileNavbar = () => {
   const path = usePathname();
   const [open, setOpen] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <nav className='navbar flex md:hidden'>
       <div className='flex items-center justify-between w-full'>
         <Link href={'/'} onClick={() => setOpen(false)}>
           <div className='flex items-center gap-2 cursor-pointer'>
-            <Image src='/icons/logo.jpg' alt='logo' width={40} height={38} />
+            <Image src='/icons/logo.jpg' alt='logo' width={40} height={38} className={cn("mix-blend-multiply")} />
           </div>
         </Link>
         <button
@@ -56,24 +59,36 @@ const MobileNavbar = () => {
           </button>
         </div>
         <ul className='flex flex-col gap-2 p-4'>
-          {links.map((link) => (
-            <li key={link.label}>
-              <Link
-                href={link.href}
-                className={cn(
-                  'block rounded-md px-3 py-2 hover:bg-muted',
-                  path === link.href && 'text-primary'
-                )}
-                onClick={() => setOpen(false)}
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
+          {links.map((link) => {
+            const label = link.href === "/"
+              ? t("nav.home")
+              : link.href === "/companions"
+              ? t("nav.companions")
+              : link.href === "/my-journey"
+              ? t("nav.myJourney")
+              : link.label;
+            return (
+              <li key={link.label}>
+                <Link
+                  href={link.href}
+                  className={cn(
+                    'block rounded-md px-3 py-2 hover:bg-muted',
+                    path === link.href && 'text-primary'
+                  )}
+                  onClick={() => setOpen(false)}
+                >
+                  {label}
+                </Link>
+              </li>
+            );
+          })}
           <li className='mt-2'>
+            <div className='px-1 pb-2'>
+              <LanguageSwitcher />
+            </div>
             <SignedOut>
-              <SignInButton>
-                <button className='btn-signin w-full'>Sign In</button>
+            <SignInButton>
+                <button className='btn-signin w-full'>{t("nav.signIn")}</button>
               </SignInButton>
             </SignedOut>
             <SignedIn>

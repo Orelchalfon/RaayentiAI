@@ -2,6 +2,7 @@ import { cn, getSubjectColor } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
+import { t } from "@/locales/i18n";
 import {
   Table,
   TableBody,
@@ -21,10 +22,10 @@ const CompanionsList: FC<{
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className='w-2/3 text-lg'>Lesson</TableHead>
-            <TableHead className='text-lg'>Subject</TableHead>
+            <TableHead className='w-2/3 text-lg'>{t("profile.recentSessions")}</TableHead>
+            <TableHead className='text-lg'>{t("forms.companion.subject.label")}</TableHead>
             <TableHead className='text-lg text-right md:text-left '>
-              Duration
+              {t("session.durationSuffix")}
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -58,7 +59,7 @@ const CompanionsList: FC<{
                   </div>
                 </TableCell>
                 <TableCell>
-                  <p>{duration} mins</p>
+                  <p>{duration} {t("session.durationSuffix")}</p>
                 </TableCell>
               </TableRow>
             )

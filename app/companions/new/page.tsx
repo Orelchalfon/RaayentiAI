@@ -4,12 +4,12 @@ import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { t } from "@/locales/i18n";
 const ctaProps = {
-  title: "Upgrade Your Plan",
-  header: "You've reached your limit.",
-  content:
-    "You've reached your companion limit. Upgrade your plan to create more companions and premium features.",
-  btnText: "Upgrade My Plan",
+  title: t("companions.limit.badge"),
+  header: t("companions.limit.header"),
+  content: t("companions.limit.content"),
+  btnText: t("companions.limit.button"),
   href: "/subscription",
   imagePath: "/images/cta.svg",
 };
@@ -22,7 +22,7 @@ const NewCompanion = async () => {
     <main className='min-lg:w-1/3 min-md:w-2/3 items-center justify-center '>
       {canCreateComanion ? (
         <article className='flex flex-col gap-4'>
-          <h1>Companion Builder</h1>
+          <h1>{t("companions.builderHeading")}</h1>
           <CompanionForm />
         </article>
       ) : (

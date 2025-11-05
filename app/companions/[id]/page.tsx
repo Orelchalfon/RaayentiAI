@@ -1,9 +1,15 @@
-import CompanionComponent from "@/components/CompanionComponent";
 import { GetCompanion } from "@/lib/actions/companion.action";
 import { getSubjectColor } from "@/lib/utils";
+import { t } from "@/locales/i18n";
 import { currentUser } from "@clerk/nextjs/server";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
+const CompanionComponent = dynamic(
+  () => import("@/components/CompanionComponent"),
+  { ssr: true }
+);
 
 const CompanionSession = async ({
   params,
@@ -42,16 +48,18 @@ const CompanionSession = async ({
           </div>
         </div>
         <div className='items-start text-2xl max-md:hidden'>
-          {duration} minutes
+          {duration} {t("session.durationSuffix")}
         </div>
       </article>
 
-      <CompanionComponent
-        {...companion}
-        companionId={id}
-        userName={user.firstName!}
-        userImage={user.imageUrl!}
-      />
+      <Suspense fallback={<div className='h-[70vh]' />}>
+        <CompanionComponent
+          {...companion}
+          companionId={id}
+          userName={user.firstName!}
+          userImage={user.imageUrl!}
+        />
+      </Suspense>
     </main>
   );
 };

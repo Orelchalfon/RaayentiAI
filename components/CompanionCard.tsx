@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FC } from "react";
+import { t } from "@/locales/i18n";
 declare type CompanionCardProps = {
   id: string;
   name: string;
@@ -55,12 +56,12 @@ const CompanionCard: FC<CompanionCardProps> = ({
           width={13.5}
           height={13.5}
         />
-        <p className='text-sm'>{duration} minutes</p>
+        <p className='text-sm'>{duration} {t("dashboard.durationSuffix")}</p>
       </div>
 
       <Link href={`/companions/${id}`} className='w-full'>
         <button className='btn-primary w-full justify-center'>
-          Launch Lesson
+          {t("dashboard.launchLesson")}
         </button>
       </Link>
     </article>
